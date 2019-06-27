@@ -16,17 +16,21 @@ contains
     ! read rest of the file into field
     ! close the file
 
+!# nx ny
+	character(len=20) :: rivi
+	character(len=10) :: buff
+	integer :: nx, ny
+	integer :: i, j
+	open(10, file = filename, status = 'old')
+	read(10, fmt='(1x,2i4)')nx,ny
+	write(*,*)nx,ny
+	allocate(field(nx,ny))
+	do i = 1, ny
+		read(10,*) field(i,:)
+		!write(*,*) field(i,:)
+	end do
 
-
-
-
-
-
-
-
-
-
-
+	close(unit=10, status = 'keep')
 
 
 
@@ -38,9 +42,10 @@ contains
   subroutine write_field(field, iter)
     use iso_fortran_env, only : REAL64
     use pngwriter
+
     implicit none
 
-    integer, parameter :: dp = REAL64
+   integer, parameter :: dp = REAL64
     real, intent(in) :: field(:,:)
     integer, intent(in) :: iter
 

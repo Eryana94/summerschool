@@ -3,11 +3,13 @@ program subroutines
   implicit none
   ! TODO: define the arrays
   integer :: nx, ny
-
+  real, dimension(:,:), allocatable :: previous, current
+	
   write (*,*) 'Give number of rows and columns for matrix A:'
   read (*,*) nx, ny
 
-  allocate(previous(nx,ny), current(nx,ny))
+  allocate(previous(nx,ny))
+  allocate(current(nx,ny))
 
   ! initialize the array
   call initialize(previous)

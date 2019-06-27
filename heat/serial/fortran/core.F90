@@ -22,6 +22,9 @@ contains
     ny = curr%ny
 
     ! TODO: implement the heat equation update
-  end subroutine evolve
+	
 
+
+  end subroutine evolve
+!u^{m+1}(i,j) = u^m(i,j) + \Delta t \alpha \nabla^2 u^m(i,j)
 end module core

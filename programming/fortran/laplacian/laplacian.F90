@@ -28,21 +28,21 @@ program laplacian
   end do
 
   ! TODO: Compute Laplacian of A and save it to array L
-  do i = 1, ny
-	do j=1, nx	
-		L(i,j) = (A(i-1,j)+A(i+1,j)-2*A(i,j))/(2*dx)+(A(i,j-1)+A(i,j+1)-2*A(i,j))/(2*dy)
+  do i = 2, ny-1
+	do j=2, nx-2	
+		L(j,i) = (A(j,i-1)+A(j,i+1)-2*A(j,i))/(dx**2)+(A(j,i-1)+A(j,i+1)-2*A(j,i))/(dy**2)
 	end do
   end do
 
   ! TODO: Printing of the arrays
   write(*,*) "Original array:"
 	do i = 1, ny
-		write(*,*)A(i,1:nx)
+		write(*,*)A(1:nx,i)
 	end do
 
   write(*,*) "Laplacian of the array:"
 	do i=1, ny
-		write(*,*)L(i,1:nx)
+		write(*,*)L(1:nx,i)
 	end do
 
   ! Analytically, the Laplacian of the function is nabla^2 A(x,y) = 4
