@@ -59,8 +59,19 @@ contains
     ! Allocate space for the data. The array for temperature field contains 
     ! also a halo region (one layer of extra space in all directions which
     ! is used as boundary condition).
+     open(10, file = filename, status = 'old')
+     read(10, *)dummy,nx,ny
+     write(*,*)nx,ny
 
+     call set_field_dimensions(field0, nx, ny)
+     allocate(field0%data(0:field0%nx + 1,0:field0%ny + 1))
 
+     do i = 1, nx
+         read(10,*) field0%data(i,1:ny)
+         !write(*,*) field(i,:)
+      end do
+
+        close(unit=10, status = 'keep')
 
     ! Read the data
 

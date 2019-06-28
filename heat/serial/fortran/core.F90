@@ -22,6 +22,12 @@ contains
     ny = curr%ny
 
     ! TODO: implement the heat equation update
+  do j = 1, prev%ny
+     do i = 1, prev%nx
+        curr%data(i,j) = prev%data(i,j) + dt * a * ( (prev%data(i-1,j) - 2.0*prev%data(i,j) + prev%data(i+1,j)) / prev%dx **2 + &
+             (prev%data(i,j-1) - 2.0*prev%data(i,j) + prev%data(i,j+1)) / prev%dy **2 )
+     end do
+  end do
 	
 
 

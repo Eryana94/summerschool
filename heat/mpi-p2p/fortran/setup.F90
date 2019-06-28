@@ -22,7 +22,7 @@ contains
     ! Default values for grid size and time steps
     rows = 2000
     cols = 2000
-    nsteps = 500
+    nsteps = 50000
     using_input_file = .false.
 
     ! Read in the command line arguments and

@@ -1,0 +1,11 @@
+ Rank:  1  received message 0
+ Rank:  2  received message 1
+ Rank:  9  received message 8
+ Rank:  7  received message 6
+ Rank:  6  received message 5
+ Rank:  8  received message 7
+ Rank:  5  received message 4
+ Rank:  4  received message 3
+ Rank:  3  received message 2
+ Rank:  0  received message 9
+Application 8808948 resources: utime ~0s, stime ~0s, Rss ~9388, inblocks ~10217, outblocks ~22680

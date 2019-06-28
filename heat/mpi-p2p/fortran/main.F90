@@ -25,7 +25,7 @@ program heat_solve
   real(kind=dp) :: start, stop ! Timers
 
   ! TODO start: initialize MPI
-
+	call mpi_init(ierr)
   ! TODO end
 
   call initialize(current, previous, nsteps, parallelization)

@@ -1,0 +1,6 @@
+Attempting to use an MPI routine before initializing MPICH
+Attempting to use an MPI routine before initializing MPICH
+Attempting to use an MPI routine before initializing MPICH
+Attempting to use an MPI routine before initializing MPICH
+Application 8809252 exit codes: 1
+Application 8809252 resources: utime ~0s, stime ~0s, Rss ~9140, inblocks ~13036, outblocks ~34513
