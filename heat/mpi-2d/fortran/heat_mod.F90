@@ -98,10 +98,17 @@ contains
 
     ! Create cartesian communicator based on dims variable. Store the communicator to the
     ! field "comm" of the parallel datatype (parallel%comm).
+    call mpi_cart_create(mpi_comm_world, 2, dims, periods, .true., parallel%comm, ierr)
+    call mpi_cart_shift(parallel%comm, 0, 1, parallel%nup, parallel%ndown, ierr)
+    call mpi_cart_shift(parallel%comm, 1, 1, parallel%nleft, parallel%nright, ierr)
+
+    call mpi_comm_size(parallel%comm, parallel%size, ierr)
+    call mpi_comm_rank(parallel%comm, parallel%rank, ierr)
 
     ! Find the neighbouring MPI tasks (parallel%nup, parallel%ndown,
     !     parallel%nleft, parallel%nright) using MPI_Cart_shift
-
+    call mpi_type_vector(ny_local + 2, 1, nx_local + 2, mpi_double_precision, parallel%rowtype, ierr)
+    call mpi_type_contiguous(nx_local + 2, mpi_double_precision, parallel%columntype, ierr)
     ! Determine parallel%size and parallel%rank from newly created
     ! Cartesian comm
 
@@ -120,16 +127,15 @@ contains
     offsets(1) = 0
     offsets(2) = 0
     if (parallel%rank == 0) then
-       sizes(1) = ! TODO
-       sizes(2) = ! TODO
+       sizes(1) = nx! TODO
+       sizes(2) = ny! TODO
     else
-       sizes(1) = ! TODO
-       sizes(2) = ! TODO
+       sizes(1) = nx_local + 2! TODO
+       sizes(2) = ny_local + 2! TODO
     end if
 
     ! TODO Fill in the correct parameters to mpi_type_create_subarray
-    call mpi_type_create_subarray(, , , , , &
-         , parallel%subarraytype, ierr)
+    call mpi_type_create_subarray(2, sizes, subsizes, offsets, mpi_order_fortran, mpi_double_precision,  parallel%subarraytype, ierr)
     call mpi_type_commit(parallel%subarraytype, ierr)
 
     ! TODO end

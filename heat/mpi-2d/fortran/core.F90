@@ -16,14 +16,15 @@ contains
     integer :: ierr
 
     ! TODO start: implement 2D halo exchange using MPI datatypes
-
-    ! Send to left, receive from right
-
+	type(mpi_status) :: status
+    ! Send to left, receive from riight
+	call mpi_sendrecv(field0%data(0,1), 1, parallel%columntype, parallel%nleft, 11, field0%data(0,field0%ny + 1), 1, parallel%columntype, parallel%nright, 11, parallel%comm, status, ierr )
     ! Send to right, receive from left
-
+	call mpi_sendrecv(field0%data(0, field0%ny), 1, parallel%columntype, parallel%nright, 12, field0%data(0,0), 1, parallel%columntype, parallel%nleft, 12, parallel%comm, status, ierr )
     ! Send to up receive from down
-
+	call mpi_sendrecv(field0%data(1,0), 1, parallel%rowtype, parallel%nup, 13, field0%data(field0%nx +1 , 0), 1, parallel%rowtype, parallel%ndown, 13, parallel%comm, status, ierr )
     ! Send to the down, receive from up
+	call mpi_sendrecv(field0%data(field0%nx,0), 1, parallel%rowtype, parallel%ndown, 14, field0%data(0,0), 1, parallel%rowtype, parallel%nup, 14, parallel%comm, status, ierr )
 
     ! TODO end
 

@@ -36,6 +36,11 @@ program cart_test
 
   ! Create the 2D Cartesian communicator
   ! TO DO
+	call mpi_cart_create(mpi_comm_world, 2, dims, period, .true., comm2d, rc)
+	call mpi_cart_shift(comm2d, 0, 1, neighbors(1), neighbors(2), rc)
+	call mpi_cart_shift(comm2d, 1, 1, neighbors(3), neighbors(4), rc)
+
+	call mpi_cart_coords(comm2d, my_id, 2, coord, rc)
   ! Find out & store the neighboring ranks
   ! TO DO
   ! Find out & store also the Cartesian coordinates of a rank
