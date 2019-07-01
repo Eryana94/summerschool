@@ -38,16 +38,23 @@ contains
 
   subroutine single_reader()
     implicit none
-    integer :: rc
+!    integer :: rc
     ! TODO: Implement a function that will read the data from a file so that
     !       a single process does the file io. Use rank WRITER_ID as the io rank
-	if (my_id == writer_id) then
-		open(11, file = 'output.dat', status='old', form = 'unformatted', access = 'stream')
-		read(11, pos = 1) fullvector
-		close(11)
-		write(*,*) fullvector
-	end if
-	call mpi_scatter(fullvector, localsize, mpi_integer, localvector, localsize, mpi_integer, writer_id, mpi_comm_world) 
+    integer :: rc, dsize
+    type(mpi_file) :: fh
+    integer(kind=MPI_OFFSET_KIND) :: offset;
+
+    call mpi_type_size(MPI_INTEGER, dsize, rc)
+
+    ! TODO: write the output file "mpiio.dat" using MPI IO. Each
+    !       rank should write their own local vectors to correct
+    !       locations in the output file.
+
+        offset = my_id * localsize * dsize
+        call mpi_file_open(mpi_comm_world, 'output.dat', mpi_mode_rdonly, mpi_info_null, fh)
+        call mpi_file_read_at_all(fh, offset, localvector, localsize, mpi_integer, mpi_status_ignore)
+        call mpi_file_close(fh,rc)
 
   end subroutine single_reader
 

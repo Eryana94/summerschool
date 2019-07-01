@@ -45,6 +45,13 @@ contains
     !       rank should write their own local vectors to correct
     !       locations in the output file.
 
+	offset = my_id * localsize * dsize
+	call mpi_file_open(mpi_comm_world, 'output.dat', mpi_mode_create + mpi_mode_wronly, mpi_info_null, fh)
+	call mpi_file_write_at_all(fh, offset, localvector, localsize, mpi_integer, mpi_status_ignore)
+	call mpi_file_close(fh,rc)
+
+		
+
   end subroutine mpiio_writer
 
 end program pario

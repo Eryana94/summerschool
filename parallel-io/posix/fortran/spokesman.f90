@@ -36,9 +36,16 @@ contains
 
   subroutine single_writer()
     implicit none
-
+    integer :: rc, i
     ! TODO: Implement a function that writers the whole array of elements
     !       to a file so that single process is responsible for the file io
+	call mpi_gather(localvector, localsize, mpi_integer, fullvector, localsize, mpi_integer, writer_id, mpi_comm_world, rc )
+	if (my_id == writer_id) then
+		write(*,*) fullvector
+		open(11, file= 'output.dat',status='replace', form = 'unformatted', access = 'stream')
+		write(11, pos =1) fullvector
+		close(11)
+	end if 
 
   end subroutine single_writer
 

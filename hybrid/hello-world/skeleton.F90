@@ -2,15 +2,19 @@ program hello
   use omp_lib
   use mpi_f08
   implicit none
-  integer :: my_id, tid, rc
+  integer :: taskid, ntasks, rc, ierr, tid
   integer :: provided, required=MPI_THREAD_FUNNELED
 
-  ! TODO: Initialize MPI with thread support.
+  call mpi_init_thread(required, provided, rc)
 
-  ! TODO: Find out the MPI rank and thread ID of each thread and print
-  !       out the results.
+  call mpi_comm_size(mpi_comm_world, ntasks, rc)
+  call mpi_comm_rank(mpi_comm_world, taskid, rc)
 
-  ! TODO: Investigate the provided thread support level.
+ !$omp parallel default(shared) private(tid)
+	tid = omp_get_thread_num()
+	write(*,*) 'Hello! I am thread ', tid, ' of process ', taskid
+
+ !$omp end parallel 
 
   call MPI_Finalize(rc)
 end program hello
